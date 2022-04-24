@@ -16,14 +16,14 @@ import json
 from bs4 import BeautifulSoup
 import requests 
 
-from model.Drama import ModelDrama 
+from model.Adventure import ModelAdventure 
 from common.Templete import Templete
 import logging 
 
-class CllctDrama(ModelDrama, Templete):
+class CllctAdventure(ModelAdventure, Templete):
     
     def __init__(self) -> None:
-        ModelDrama.__init__(self)
+        ModelAdventure.__init__(self)
         self.logger = self.getLogger()
     
     def getLogger(self)-> logging:
@@ -43,7 +43,7 @@ class CllctDrama(ModelDrama, Templete):
         # log를 파일에 출력
         # /Users/kimjunhyeon/Desktop/naver/cllctlog/
         file_handler = logging.FileHandler(
-            self.rootLoggingFilePath + f"/{ModelDrama.FLAG}/{ModelDrama.FLAG}_log_{self.fileGenerateTime}.log")
+            self.rootLoggingFilePath + f"/{ModelAdventure.FLAG}/{ModelAdventure.FLAG}_log_{self.fileGenerateTime}.log")
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
         return logger 
@@ -79,7 +79,7 @@ class CllctDrama(ModelDrama, Templete):
                         "movie_url": movieUrl, 
                         "movie_title": movieTitle,
                         "movie_cllct": self.cllctTime,
-                        "movie_genre": ModelDrama.FLAG
+                        "movie_genre": ModelAdventure.FLAG
                     } 
                     self.actionList.append(doc)
                 
@@ -93,7 +93,7 @@ class CllctDrama(ModelDrama, Templete):
             :return:
         '''
         if self.actionList:
-            ndjsonFile = f"{self.jsonFilePath}/{ModelDrama.FLAG}_{self.cllctTime}_.log" # *********
+            ndjsonFile = f"{self.jsonFilePath}/{ModelAdventure.FLAG}_{self.cllctTime}_.log" # *********
             with open(ndjsonFile, "a", encoding="utf-8") as jw:
                 for jrow in self.actionList:
                     jw.write(json.dumps(jrow, ensure_ascii=False) + "\n")
@@ -102,7 +102,7 @@ class CllctDrama(ModelDrama, Templete):
                 
             self.logger.info(f"{ndjsonFile} file generate success") # ********
 def main():
-    o = CllctDrama() 
+    o = CllctAdventure() 
     o.getData()
     o.jsonFileGenerate()
     
